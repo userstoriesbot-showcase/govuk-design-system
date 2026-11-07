@@ -1,12 +1,10 @@
 # Showcase fork only (never part of an upstream pull request).
-# tasks/start.js ignores CLI flags: the port comes from PORT and
-# ALLOW_EXTERNAL_CONNECTIONS=true makes browser-sync bind all interfaces
-# (by default it listens on localhost only, which a published container port cannot reach).
-# The dev build takes about 3 seconds; the site makes no external requests.
+# Dogfood (first-try start track, ADR-0268): ALLOW_EXTERNAL_CONNECTIONS is left out on purpose, so browser-sync
+# listens on localhost only and the run must adopt the loopback port.
 version: 1
 app:
   install: "PUPPETEER_SKIP_DOWNLOAD=true npm ci"
-  start: "ALLOW_EXTERNAL_CONNECTIONS=true PORT={port} npm start"
+  start: "PORT={port} npm start"
   url: http://localhost:{port}
   readyPath: /cookies/
   runtime: node24
